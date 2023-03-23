@@ -1,16 +1,11 @@
 <script setup>
-  import Coingecko from "./composables/Coingecko.vue";
-  import CryptoList from "./components/CryptoList.vue";
+  import Header from "./components/Header.vue";
+  import { RouterView } from "vue-router";
 
   
 </script>
 
 <template>
-
-  <Coingecko/>
-  
+  <Header />
+  <RouterView />
 </template>
-
-<style scoped>
-
-</style>
