@@ -29,10 +29,17 @@ const coins = computed(() => state.coins)
 </script>
    
 <template>
-     <div>
-       <h2> Crypto Name: {{ coins.name }}</h2>
-       <p> Symbol: {{ coins.symbol }}  </p>
-     </div>
+
+     <div class="box-content h-42 w-42 p-4 border-4 ...">
+      <h1> Rank in Market Cap: {{ coins.market_cap_rank || 'Loading...' }} </h1>
+      <h2> Crypto: {{ coins.name || 'Loading...'  }}</h2>
+      <p> Symbol: {{ coins.symbol || 'Loading...'  }}  </p>
+      <p> Current Price: {{ new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format( coins.market_data?.current_price?.usd || 'Loading...') }}  </p>
+      <p> Price change % (past 24 hours): {{ coins.market_data?.market_cap_change_percentage_24h + "%" || 'Loading...' }}  </p>
+      <p v-if="coins.hashing_algorithm"> Hashing Algorithm: {{  coins.hashing_algorithm || 'Loading...' }} </p>
+      <h1> {{  coins.description?.en || 'No description' }} </h1>
+
+    </div>
 </template>
 
 <!-- <template>

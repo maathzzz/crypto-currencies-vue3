@@ -2,18 +2,22 @@
 import { ref, watch, reactive, onMounted, computed } from 'vue';
 import { RouterLink } from 'vue-router';
 import CryptoPage from "../views/CryptoPage.vue";
+import Headline from "../components/Headline.vue";
 
 const state = reactive({
-  coins: []
+  coins: [],
+  pageId: 1
 });
 
 async function fetchData() {
-  const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false');
+  // const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false');
+  const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${state.pageId}&sparkline=false`);
   const data = await response.json();
   state.coins = data;
 }
 
 onMounted(fetchData);
+
 
 // define `coins` as a computed property
 const coins = computed(() => state.coins)
@@ -23,34 +27,12 @@ const coins = computed(() => state.coins)
 
 <template>
   <div class="container mx-auto pt-18 pb-48 px-2">
-    <section class="relative isolate overflow-hidden bg-white py-24 px-6 sm:py-32 lg:px-8">
-      <div class="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)] opacity-20" />
-      <div class="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center" />
-        <div class="mx-auto max-w-2xl lg:max-w-4xl">
-          <img class="mx-auto h-12" src="https://zuviapay.com.br/img/logo.png" alt="" />
-          <figure class="mt-10">
-            <blockquote class="text-center text-xl font-semibold leading-8 text-gray-900 sm:text-2xl sm:leading-9">
-              <p>Top 50 Crypto in Market Value.</p>
-            </blockquote>
-            <figcaption class="mt-10">
-              <!-- <img class="mx-auto h-10 w-10 rounded-full" src="../assets/img/daniels.jpg" alt="" /> -->
-              <div class="mt-4 flex items-center justify-center space-x-3 text-base">
-                <div class="font-semibold text-gray-900">Powered by</div>
-                <svg viewBox="0 0 2 2" width="3" height="3" aria-hidden="true" class="fill-gray-900">
-                  <circle cx="1" cy="1" r="1" />
-                </svg>
-                <div class="text-gray-600">Zuvia Technology</div>
-              </div>
-            </figcaption>
-          </figure>
-        </div>
-    </section>
 
+    <Headline />
+    
     <!-- Search -->
     <div class="flex justify-end pb-2 ">
       <div class="flex">
-
-        
         <div class="dropdown btn-info">
             <button class="visible btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Cotation
@@ -123,5 +105,59 @@ const coins = computed(() => state.coins)
         </tr>
       </tbody>
     </table>
+
+    <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+      <div class="flex flex-1 justify-between sm:hidden">
+        <a href="#" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Previous</a>
+        <a href="#" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">Next</a>
+      </div>
+      <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm text-gray-700">
+            Showing
+            <span class="font-medium">1</span>
+            to
+            <span class="font-medium">5</span>
+            of
+            <span class="font-medium">100</span>
+            results
+          </p>
+        </div>
+        <div>
+          <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+            <a href="#" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+              <span class="sr-only">Previous</span>
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+              </svg>
+            </a>
+            <!-- Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
+            <button @click="pageId++" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">1</button>
+            <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">2</a>
+            <a href="#" class="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">3</a>
+            <a href="#" class="relative hidden items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 md:inline-flex">4</a>
+            <a href="#" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">5</a>
+            <a href="#" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+              <span class="sr-only">Next</span>
+              <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <footer
+  class="bg-neutral-200 text-center dark:bg-neutral-700 lg:text-left">
+  <div class="p-4 text-center text-neutral-700 dark:text-neutral-200">
+    Zuvia
+    <a
+      class="text-neutral-800 dark:text-neutral-400"
+      href="https://tailwind-elements.com/"
+      >Crypto Currencies App</a
+    >
+  </div>
+</footer>
 </template>
