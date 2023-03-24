@@ -36,8 +36,10 @@ const coins = computed(() => state.coins)
       <p> Symbol: {{ coins.symbol || 'Loading...'  }}  </p>
       <p> Current Price: {{ new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format( coins.market_data?.current_price?.usd || 'Loading...') }}  </p>
       <p> Price change % (past 24 hours): {{ coins.market_data?.market_cap_change_percentage_24h + "%" || 'Loading...' }}  </p>
+      <p> Volume: {{ coins.market_data?.total_volume?.usd || 'Loading...' }} </p>
       <p v-if="coins.hashing_algorithm"> Hashing Algorithm: {{  coins.hashing_algorithm || 'Loading...' }} </p>
-      <h1> {{  coins.description?.en || 'No description' }} </h1>
+      <p  v-if="coins.genesis_date"> Created at: {{  coins.genesis_date || 'Loading...' }} </p>
+      <p v-if="coins.description?.en "> <br> {{  coins.description?.en || 'No description' }} </p>
 
     </div>
 </template>
