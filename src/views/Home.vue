@@ -5,7 +5,6 @@
 </script>
 
 <template>
-  
   <Coingecko/>
 </template>
 

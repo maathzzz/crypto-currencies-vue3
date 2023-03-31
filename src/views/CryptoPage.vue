@@ -43,19 +43,3 @@ const coins = computed(() => state.coins)
 
     </div>
 </template>
-
-<!-- <template>
-  <div>
-    <p>{{ coin.name }}</p>
-    <p>{{ coin.current_price }}</p>
-  </div>
-</template>
-
-<script setup>
-  const props = defineProps({
-    coin: Object,
-  });
-</script> -->
-
-
-

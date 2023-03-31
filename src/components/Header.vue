@@ -22,7 +22,7 @@
     <div class="hidden lg:flex lg:gap-x-12">
         <RouterLink to="/" class="text-sm font-semibold leading-6 text-gray-900" active-class="active">Home</RouterLink>
         <a href="https://www.coingecko.com/en/api/documentation" class="text-sm font-semibold leading-6 text-gray-900" target="_blank">Crypto API</a>
-        <a href="#" class="text-sm font-semibold leading-6 text-gray-900">About Us</a>
+        <a href="https://zuvia.com.br/" class="text-sm font-semibold leading-6 text-gray-900" target="_blank">About Zuvia</a>
     </div>
     <div class="hidden lg:flex lg:flex-1 lg:justify-end">
       <a href="https://github.com/maathzzz/crypto-currencies-vue3" class="text-sm font-semibold leading-6 text-gray-900" target="_blank"> GitHub Repository <span aria-hidden="true">&rarr;</span></a>
