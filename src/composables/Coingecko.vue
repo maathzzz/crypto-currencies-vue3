@@ -28,8 +28,12 @@ const previousPage = () => {
 }
 
 const nextPage = () => {
+  if (state.pageId >= 5) {
+    fetchData()
+  } else {
     state.pageId++
     fetchData()
+  }
 }
 
 </script>
